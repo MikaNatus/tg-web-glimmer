@@ -45,7 +45,7 @@ export const WithdrawModal = ({ isOpen, onClose }: WithdrawModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md gradient-dark border-border">
+      <DialogContent className="sm:max-w-md gradient-dark border-border mx-4">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Wallet className="w-5 h-5 text-primary" />
@@ -115,9 +115,9 @@ export const WithdrawModal = ({ isOpen, onClose }: WithdrawModalProps) => {
                 <SelectTrigger className="bg-secondary border-border">
                   <SelectValue placeholder="Выберите сохраненный кошелек" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-popover border-border">
                   {existingWallets.map((wallet) => (
-                    <SelectItem key={wallet.id} value={wallet.id}>
+                    <SelectItem key={wallet.id} value={wallet.id} className="hover:bg-accent hover:text-foreground">
                       <div className="flex items-center gap-2">
                         <Wallet className="w-4 h-4" />
                         <div>
