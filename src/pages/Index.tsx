@@ -4,7 +4,7 @@ import { ActionButtons } from "@/components/ActionButtons";
 import { Settings } from "./Settings";
 import { Links } from "./Links";
 
-type PageType = "main" | "settings" | "links";
+type PageType = "main" | "settings" | "links" | "create-link";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState<PageType>("main");
@@ -21,7 +21,11 @@ const Index = () => {
   }
 
   if (currentPage === "links") {
-    return <Links onBack={() => handleNavigate("main")} />;
+    return <Links onBack={() => handleNavigate("main")} mode="view" />;
+  }
+
+  if (currentPage === "create-link") {
+    return <Links onBack={() => handleNavigate("main")} mode="create" />;
   }
 
   return (
@@ -32,7 +36,7 @@ const Index = () => {
         
         {/* Action Buttons */}
         <ActionButtons
-          onCreateLink={() => handleNavigate("links")}
+          onCreateLink={() => setCurrentPage("create-link")}
           onMyLinks={() => handleNavigate("links")}
           isAdmin={isAdmin}
         />

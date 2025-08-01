@@ -16,10 +16,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Services } from "./Services";
+import { Domains } from "./Domains";
+import { CreateLink } from "./CreateLink";
 
 interface LinksProps {
   onBack: () => void;
+  mode?: "create" | "view";
 }
+
+type ViewState = "categories" | "services" | "domains" | "create" | "links";
 
 const categories = [
   {
@@ -96,64 +102,124 @@ const categories = [
   },
 ];
 
-export const Links = ({ onBack }: LinksProps) => {
+export const Links = ({ onBack, mode = "view" }: LinksProps) => {
+  const [viewState, setViewState] = useState<ViewState>(mode === "create" ? "categories" : "links");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedService, setSelectedService] = useState<{id: string, name: string} | null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
-  // Mock links data for selected category
+  // Mock links data
   const mockLinks = [
     {
       id: "1",
-      title: "Ссылка на товар #1",
-      url: "https://example.com/product1",
+      title: "Ссылка на товар Wildberries #1", 
+      url: "https://wb-helper.ru/product1",
       clicks: 156,
       profit: 250,
       status: "active",
+      category: "Маркет-плейсы",
+      service: "Wildberries",
+      domain: "wb-helper.ru"
     },
     {
       id: "2", 
-      title: "Ссылка на товар #2",
-      url: "https://example.com/product2",
+      title: "Ссылка на товар Ozon #1",
+      url: "https://ozon-market.ru/product2", 
       clicks: 89,
       profit: 180,
       status: "active",
+      category: "Маркет-плейсы",
+      service: "Ozon",
+      domain: "ozon-market.ru"
     },
     {
       id: "3",
-      title: "Ссылка на товар #3", 
-      url: "https://example.com/product3",
+      title: "Ссылка Авито Недвижимость", 
+      url: "https://avito-realty.com/product3",
       clicks: 23,
       profit: 45,
       status: "pending",
+      category: "Недвижимость", 
+      service: "Авито",
+      domain: "avito-realty.com"
     },
   ];
 
-  if (selectedCategory) {
+  // Navigation handlers
+  const handleCategorySelect = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setViewState("services");
+  };
+
+  const handleServiceSelect = (serviceId: string, serviceName: string) => {
+    setSelectedService({ id: serviceId, name: serviceName });
+    setViewState("domains");
+  };
+
+  const handleDomainSelect = (domain: string) => {
+    setSelectedDomain(domain);
+    setViewState("create");
+  };
+
+  const handleLinkCreated = () => {
+    setViewState("links");
+    // Reset state
+    setSelectedCategory(null);
+    setSelectedService(null);
+    setSelectedDomain(null);
+  };
+
+  // Render different views based on state
+  if (viewState === "services" && selectedCategory) {
     const category = categories.find(c => c.id === selectedCategory);
-    
+    return (
+      <Services
+        categoryId={selectedCategory}
+        categoryName={category?.name || ""}
+        onBack={() => setViewState("categories")}
+        onServiceSelect={handleServiceSelect}
+      />
+    );
+  }
+
+  if (viewState === "domains" && selectedService) {
+    return (
+      <Domains
+        serviceId={selectedService.id}
+        serviceName={selectedService.name}
+        onBack={() => setViewState("services")}
+        onDomainSelect={handleDomainSelect}
+      />
+    );
+  }
+
+  if (viewState === "create" && selectedDomain) {
+    return (
+      <CreateLink
+        domain={selectedDomain}
+        onBack={() => setViewState("domains")}
+        onLinkCreated={handleLinkCreated}
+      />
+    );
+  }
+
+  // Links view (показать все ссылки)
+  if (viewState === "links") {
     return (
       <div className="min-h-screen bg-background">
         {/* Header */}
         <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
           <div className="max-w-md mx-auto p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSelectedCategory(null)}
-                  className="hover:bg-secondary/80"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                </Button>
-                <div className="flex items-center gap-3">
-                  {category && <category.icon className={`w-5 h-5 ${category.color}`} />}
-                  <h1 className="text-xl font-bold">{category?.name}</h1>
-                </div>
-              </div>
-              <Button size="sm" className="gradient-primary">
-                <Plus className="w-4 h-4 mr-1" />
-                Добавить
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onBack}
+                className="hover:bg-secondary/80"
+              >
+                <ArrowLeft className="w-4 h-4" />
               </Button>
+              <h1 className="text-xl font-bold">Мои ссылки</h1>
             </div>
           </div>
         </div>
@@ -163,7 +229,12 @@ export const Links = ({ onBack }: LinksProps) => {
             <Card key={link.id} className="p-4 shadow-card">
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
-                  <h3 className="font-medium text-foreground">{link.title}</h3>
+                  <div>
+                    <h3 className="font-medium text-foreground">{link.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {link.category} • {link.service}
+                    </p>
+                  </div>
                   <Badge 
                     variant={link.status === "active" ? "default" : "secondary"}
                     className={link.status === "active" ? "bg-success text-success-foreground" : ""}
@@ -193,6 +264,7 @@ export const Links = ({ onBack }: LinksProps) => {
     );
   }
 
+  // Categories view (для создания ссылок)
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -207,7 +279,7 @@ export const Links = ({ onBack }: LinksProps) => {
             >
               <ArrowLeft className="w-4 h-4" />
             </Button>
-            <h1 className="text-xl font-bold">Мои ссылки</h1>
+            <h1 className="text-xl font-bold">Создать ссылку</h1>
           </div>
         </div>
       </div>
@@ -219,7 +291,7 @@ export const Links = ({ onBack }: LinksProps) => {
             <Card
               key={category.id}
               className="p-4 cursor-pointer hover:shadow-glow transition-all duration-200 shadow-card"
-              onClick={() => setSelectedCategory(category.id)}
+              onClick={() => handleCategorySelect(category.id)}
             >
               <div className="space-y-3">
                 <div className={`w-12 h-12 rounded-lg ${category.bgColor} flex items-center justify-center`}>
@@ -228,21 +300,13 @@ export const Links = ({ onBack }: LinksProps) => {
                 <div>
                   <h3 className="font-medium text-sm leading-tight">{category.name}</h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {category.count} ссылок
+                    {category.count} сервисов
                   </p>
                 </div>
               </div>
             </Card>
           ))}
         </div>
-
-        {/* Create New Category Button */}
-        <Card className="mt-4 p-4 border-dashed border-2 border-border hover:border-primary/50 cursor-pointer transition-colors">
-          <div className="flex items-center justify-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-            <Plus className="w-5 h-5" />
-            <span>Добавить категорию</span>
-          </div>
-        </Card>
       </div>
     </div>
   );

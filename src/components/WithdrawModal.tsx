@@ -45,7 +45,7 @@ export const WithdrawModal = ({ isOpen, onClose }: WithdrawModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md gradient-dark border-border mx-4">
+      <DialogContent className="max-w-sm gradient-dark border-border mx-4 w-[calc(100vw-2rem)]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Wallet className="w-5 h-5 text-primary" />
