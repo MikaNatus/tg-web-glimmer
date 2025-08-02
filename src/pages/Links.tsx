@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   ArrowLeft, 
   ShoppingBag, 
@@ -103,6 +104,7 @@ const categories = [
 ];
 
 export const Links = ({ onBack, mode = "view" }: LinksProps) => {
+  const navigate = useNavigate();
   const [viewState, setViewState] = useState<ViewState>(mode === "create" ? "categories" : "links");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState<{id: string, name: string} | null>(null);
@@ -229,7 +231,7 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
             <Card 
               key={link.id} 
               className="p-4 shadow-card cursor-pointer hover:shadow-card-hover transition-all duration-200"
-              onClick={() => window.location.href = `/view-link/${link.id}`}
+              onClick={() => navigate(`/view-link/${link.id}`)}
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">

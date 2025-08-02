@@ -5,18 +5,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Package, Mail, Edit, Trash2, StickyNote } from "lucide-react";
+import { ArrowLeft, Package, Mail, Edit, Trash2, StickyNote, Copy, Wifi } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const ViewLink = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { toast } = useToast();
   const [checkerBalance, setCheckerBalance] = useState(false);
   const [cashback, setCashback] = useState(true);
   const [info900, setInfo900] = useState(false);
   const [note, setNote] = useState("");
   const [email, setEmail] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+
+  // Моковые домены для выбора
+  const mockDomains = [
+    { name: "wb-helper.ru", status: "working" },
+    { name: "ozon-market.ru", status: "working" },
+    { name: "avito-realty.com", status: "not-working" },
+    { name: "marketplace-api.com", status: "working" }
+  ];
 
   // Данные ссылки (в реальном приложении будут загружаться по ID)
   const linkData = {
@@ -36,6 +47,24 @@ const ViewLink = () => {
 
   const handleDeleteNote = () => {
     setNote("");
+  };
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Скопировано!",
+      description: `${label} скопирован в буфер обмена`,
+    });
+  };
+
+  const handleDomainChange = () => {
+    if (selectedDomain) {
+      toast({
+        title: "Домен изменен!",
+        description: `Домен изменен на ${selectedDomain}`,
+      });
+      setSelectedDomain(null);
+    }
   };
 
   return (
@@ -79,17 +108,33 @@ const ViewLink = () => {
               <span className="text-muted-foreground">Стоимость доставки курьером:</span>
               <span className="font-medium">{linkData.courierDelivery}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Оплата:</span>
-              <a href={linkData.paymentUrl} className="text-primary hover:underline text-sm">
-                Ссылка на страницу оплаты
-              </a>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium truncate max-w-32">{linkData.paymentUrl}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => copyToClipboard(linkData.paymentUrl, "URL оплаты")}
+                  className="h-6 w-6 p-0"
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
+              </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Возврат:</span>
-              <a href={linkData.returnUrl} className="text-primary hover:underline text-sm">
-                Ссылка на страницу возврата
-              </a>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium truncate max-w-32">{linkData.returnUrl}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => copyToClipboard(linkData.returnUrl, "URL возврата")}
+                  className="h-6 w-6 p-0"
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -97,14 +142,55 @@ const ViewLink = () => {
         {/* Кнопки действий */}
         <Card className="bg-gradient-card shadow-card border-0">
           <CardContent className="p-4 space-y-3">
-            <Button
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => navigate(`/products-list/${id}`)}
-            >
-              <Package className="h-4 w-4 mr-2" />
-              Список товаров
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="w-full justify-start">
+                  <Wifi className="h-4 w-4 mr-2" />
+                  Подключить API
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>API подключение</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>API URL:</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        value="https://api.example.com/payment"
+                        readOnly
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyToClipboard("https://api.example.com/payment", "API URL")}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>GET запрос:</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        value="GET /payment?sum=1000"
+                        readOnly
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyToClipboard("GET /payment?sum=1000", "GET запрос")}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Email 900 */}
             <div className="flex gap-2">
@@ -307,17 +393,41 @@ const ViewLink = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Изменить ссылку</DialogTitle>
+                <DialogTitle>Изменить домен</DialogTitle>
               </DialogHeader>
-              <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
-                  Изменить домен
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Изменить стоимость доставки в ПВЗ
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  Изменить стоимость доставки курьером
+              <div className="space-y-4">
+                <Label>Выберите новый домен:</Label>
+                <div className="space-y-2">
+                  {mockDomains.map((domain) => (
+                    <div
+                      key={domain.name}
+                      className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${
+                        selectedDomain === domain.name
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                      onClick={() => setSelectedDomain(domain.name)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{domain.name}</span>
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            domain.status === "working" ? "bg-green-500" : "bg-red-500"
+                          }`}
+                        />
+                        <span className="text-xs text-muted-foreground">
+                          {domain.status === "working" ? "Работает" : "Не работает"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  className="w-full"
+                  onClick={handleDomainChange}
+                  disabled={!selectedDomain}
+                >
+                  Сохранить изменения
                 </Button>
               </div>
             </DialogContent>
