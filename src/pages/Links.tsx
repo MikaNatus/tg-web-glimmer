@@ -226,7 +226,11 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
 
         <div className="max-w-md mx-auto p-4 space-y-4">
           {mockLinks.map((link) => (
-            <Card key={link.id} className="p-4 shadow-card">
+            <Card 
+              key={link.id} 
+              className="p-4 shadow-card cursor-pointer hover:shadow-card-hover transition-all duration-200"
+              onClick={() => window.location.href = `/view-link/${link.id}`}
+            >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
