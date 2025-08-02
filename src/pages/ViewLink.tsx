@@ -384,54 +384,14 @@ const ViewLink = () => {
 
         {/* Кнопки управления */}
         <div className="flex gap-3">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="flex-1">
-                <Edit className="h-4 w-4 mr-2" />
-                Изменить
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Изменить домен</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <Label>Выберите новый домен:</Label>
-                <div className="space-y-2">
-                  {mockDomains.map((domain) => (
-                    <div
-                      key={domain.name}
-                      className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${
-                        selectedDomain === domain.name
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                      onClick={() => setSelectedDomain(domain.name)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{domain.name}</span>
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            domain.status === "working" ? "bg-green-500" : "bg-red-500"
-                          }`}
-                        />
-                        <span className="text-xs text-muted-foreground">
-                          {domain.status === "working" ? "Работает" : "Не работает"}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  className="w-full"
-                  onClick={handleDomainChange}
-                  disabled={!selectedDomain}
-                >
-                  Сохранить изменения
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Button 
+            variant="outline" 
+            className="flex-1"
+            onClick={() => navigate(`/edit-link/${id}`)}
+          >
+            <Edit className="h-4 w-4 mr-2" />
+            Изменить
+          </Button>
 
           <Button variant="destructive" className="flex-1">
             <Trash2 className="h-4 w-4 mr-2" />
