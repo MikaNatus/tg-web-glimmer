@@ -29,7 +29,7 @@ export const ActionButtons = ({ onCreateLink, onMyLinks, isAdmin = false }: Acti
     {
       icon: BarChart3,
       label: "Статистика",
-      onClick: () => console.log("Statistics"),
+      onClick: () => window.location.href = "/statistics",
     },
   ];
 

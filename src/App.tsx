@@ -12,6 +12,7 @@ import { Domains } from "./pages/Domains";
 import { CreateLink } from "./pages/CreateLink";
 import ViewLink from "./pages/ViewLink";
 import EditLink from "./pages/EditLink";
+import Statistics from "./pages/Statistics";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/create-link/:category/:service/:domain" element={<CreateLink domain="temp" onBack={() => window.history.back()} onLinkCreated={() => {}} />} />
           <Route path="/view-link/:id" element={<ViewLink />} />
           <Route path="/edit-link/:id" element={<EditLink />} />
+          <Route path="/statistics" element={<Statistics />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
