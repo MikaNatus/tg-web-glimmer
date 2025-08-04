@@ -13,6 +13,9 @@ import { CreateLink } from "./pages/CreateLink";
 import ViewLink from "./pages/ViewLink";
 import EditLink from "./pages/EditLink";
 import Statistics from "./pages/Statistics";
+import { Application } from "./pages/Application";
+import { ApplicationRejected } from "./pages/ApplicationRejected";
+import { ApplicationPending } from "./pages/ApplicationPending";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +35,9 @@ const App = () => (
           <Route path="/view-link/:id" element={<ViewLink />} />
           <Route path="/edit-link/:id" element={<EditLink />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/application" element={<Application onBack={() => window.history.back()} />} />
+          <Route path="/application-rejected" element={<ApplicationRejected onBack={() => window.history.back()} />} />
+          <Route path="/application-pending" element={<ApplicationPending onBack={() => window.history.back()} />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
