@@ -16,6 +16,7 @@ import Statistics from "./pages/Statistics";
 import { Application } from "./pages/Application";
 import { ApplicationRejected } from "./pages/ApplicationRejected";
 import { ApplicationPending } from "./pages/ApplicationPending";
+import { AdminPanel } from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/application" element={<Application onBack={() => window.history.back()} />} />
           <Route path="/application-rejected" element={<ApplicationRejected onBack={() => window.history.back()} />} />
           <Route path="/application-pending" element={<ApplicationPending onBack={() => window.history.back()} />} />
+          <Route path="/admin" element={<AdminPanel onBack={() => window.history.back()} />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
