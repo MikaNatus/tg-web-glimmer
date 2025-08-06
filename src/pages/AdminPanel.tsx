@@ -94,23 +94,24 @@ function AdminApplications() {
   
   return (
     <div className="min-h-screen bg-background">
-      <div className="container max-w-7xl mx-auto p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/admin')}
-            className="hover:bg-accent shadow-glow"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg gradient-primary shadow-glow">
-              <FileText className="h-6 w-6 text-background" />
-            </div>
-            <h1 className="text-3xl font-bold">Заявки</h1>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/admin')}
+              className="hover:bg-secondary/80"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-xl font-bold">Заявки</h1>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-md mx-auto p-4">
         <ApplicationsPage />
       </div>
     </div>
@@ -122,23 +123,24 @@ function AdminUsers() {
   
   return (
     <div className="min-h-screen bg-background">
-      <div className="container max-w-7xl mx-auto p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/admin')}
-            className="hover:bg-accent shadow-glow"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg gradient-primary shadow-glow">
-              <Users className="h-6 w-6 text-background" />
-            </div>
-            <h1 className="text-3xl font-bold">Пользователи</h1>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/admin')}
+              className="hover:bg-secondary/80"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-xl font-bold">Пользователи</h1>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-md mx-auto p-4">
         <UsersPage />
       </div>
     </div>
@@ -150,23 +152,24 @@ function AdminStatistics() {
   
   return (
     <div className="min-h-screen bg-background">
-      <div className="container max-w-7xl mx-auto p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/admin')}
-            className="hover:bg-accent shadow-glow"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg gradient-primary shadow-glow">
-              <BarChart3 className="h-6 w-6 text-background" />
-            </div>
-            <h1 className="text-3xl font-bold">Статистика</h1>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/admin')}
+              className="hover:bg-secondary/80"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-xl font-bold">Статистика</h1>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-md mx-auto p-4">
         <StatisticsPage />
       </div>
     </div>
@@ -178,23 +181,24 @@ function AdminSettings() {
   
   return (
     <div className="min-h-screen bg-background">
-      <div className="container max-w-7xl mx-auto p-6">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/admin')}
-            className="hover:bg-accent shadow-glow"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg gradient-primary shadow-glow">
-              <Settings className="h-6 w-6 text-background" />
-            </div>
-            <h1 className="text-3xl font-bold">Настройки</h1>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/admin')}
+              className="hover:bg-secondary/80"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-xl font-bold">Настройки</h1>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-md mx-auto p-4">
         <SettingsPage />
       </div>
     </div>
