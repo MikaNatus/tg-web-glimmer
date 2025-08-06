@@ -17,39 +17,34 @@ function AdminHome() {
     {
       title: 'Рассылка',
       icon: MessageSquare,
-      onClick: () => setIsNewsletterOpen(true),
-      description: 'Отправка сообщений пользователям'
+      onClick: () => setIsNewsletterOpen(true)
     },
     {
       title: 'Заявки',
       icon: FileText,
-      onClick: () => navigate('/admin/applications'),
-      description: 'Управление заявками на вступление'
+      onClick: () => navigate('/admin/applications')
     },
     {
       title: 'Пользователи',
       icon: Users,
-      onClick: () => navigate('/admin/users'),
-      description: 'Управление пользователями системы'
+      onClick: () => navigate('/admin/users')
     },
     {
       title: 'Статистика',
       icon: BarChart3,
-      onClick: () => navigate('/admin/statistics'),
-      description: 'Просмотр статистики и аналитики'
+      onClick: () => navigate('/admin/statistics')
     },
     {
       title: 'Настройки',
       icon: Settings,
-      onClick: () => navigate('/admin/settings'),
-      description: 'Настройки системы и конфигурация'
+      onClick: () => navigate('/admin/settings')
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container max-w-5xl mx-auto p-6">
-        <div className="flex items-center gap-4 mb-8">
+      <div className="max-w-md mx-auto p-4">
+        <div className="flex items-center gap-4 mb-6">
           <Button
             variant="ghost"
             size="icon"
@@ -62,26 +57,23 @@ function AdminHome() {
             <div className="p-2 rounded-lg gradient-primary shadow-glow">
               <Settings className="h-6 w-6 text-background" />
             </div>
-            <h1 className="text-3xl font-bold gradient-text">Админ панель</h1>
+            <h1 className="text-2xl font-bold gradient-text">Админ панель</h1>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 gap-4">
           {adminButtons.map((button) => (
             <Card
               key={button.title}
               className="cursor-pointer transition-all duration-300 hover:shadow-elevated hover:scale-105 shadow-card gradient-secondary border-0 group animate-fade-in"
               onClick={button.onClick}
             >
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4">
+                <div className="flex flex-col items-center text-center gap-3">
                   <div className="p-3 rounded-xl gradient-primary shadow-glow transition-all duration-300 group-hover:scale-110">
                     <button.icon className="h-6 w-6 text-background" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors">{button.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{button.description}</p>
-                  </div>
+                  <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{button.title}</h3>
                 </div>
               </CardContent>
             </Card>
