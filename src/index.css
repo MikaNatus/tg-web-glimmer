@@ -152,6 +152,17 @@
     animation: glow 2s ease-in-out infinite alternate;
   }
   
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-gradient-card {
+    background: var(--gradient-secondary);
+  }
+  
   @keyframes glow {
     from {
       box-shadow: 0 0 20px hsl(213 93% 67% / 0.2);
