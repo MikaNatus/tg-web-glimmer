@@ -1,146 +1,211 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Search, Eye, Trash2, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { DomainModal } from './DomainModal';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
-interface Chat {
+interface Domain {
   id: number;
-  chatId: string;
-  type: 'none' | 'all' | 'success' | 'errors';
-  category: 'workers' | 'admin' | 'logs' | 'statistics' | 'applications';
   name: string;
+  status: 'active' | 'inactive' | 'blocked';
+  googleCT: string[];
+  yandexCT: string[];
+  megafonCT: string[];
+  createdAt: string;
 }
 
-interface ChatModalProps {
-  chat: Chat | null;
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (chat: Omit<Chat, 'id'>) => void;
-}
+const mockDomains: Domain[] = [
+  {
+    id: 1,
+    name: 'example1.com',
+    status: 'active',
+    googleCT: ['sub1.example1.com', 'sub2.example1.com'],
+    yandexCT: ['sub3.example1.com'],
+    megafonCT: ['sub4.example1.com'],
+    createdAt: '2025-01-01'
+  },
+  {
+    id: 2,
+    name: 'example2.com',
+    status: 'inactive',
+    googleCT: [],
+    yandexCT: ['sub1.example2.com'],
+    megafonCT: [],
+    createdAt: '2025-01-02'
+  }
+];
 
-export function ChatModal({ chat, isOpen, onClose, onSave }: ChatModalProps) {
-  const [chatId, setChatId] = useState('');
-  const [type, setType] = useState<Chat['type']>('none');
-  const [category, setCategory] = useState<Chat['category']>('workers');
-  const [name, setName] = useState('');
+export function DomainsSection() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
+  const itemsPerPage = 10;
 
-  useEffect(() => {
-    if (chat) {
-      setChatId(chat.chatId);
-      setType(chat.type);
-      setCategory(chat.category);
-      setName(chat.name);
-    } else {
-      setChatId('');
-      setType('none');
-      setCategory('workers');
-      setName('');
-    }
-  }, [chat]);
+  const filteredDomains = mockDomains.filter(domain =>
+    domain.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleSave = () => {
-    onSave({
-      chatId,
-      type,
-      category,
-      name: name || `${getCategoryLabel(category)} - ${getTypeLabel(type)}`
-    });
+  const totalPages = Math.ceil(filteredDomains.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedDomains = filteredDomains.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleBuyRu = () => {
+    console.log('Buying .ru domains');
   };
 
-  const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'none': return 'Нет';
-      case 'all': return 'Все';
-      case 'success': return 'Успешные';
-      case 'errors': return 'Ошибки';
-      default: return type;
-    }
+  const handleDeleteInactive = () => {
+    console.log('Deleting inactive domains');
   };
 
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'workers': return 'Воркеры';
-      case 'admin': return 'Админка';
-      case 'logs': return 'Логи';
-      case 'statistics': return 'Статистика';
-      case 'applications': return 'Заявки';
-      default: return category;
-    }
+  const handleDeleteAll = () => {
+    console.log('Deleting all domains');
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>
-            {chat ? 'Редактировать чат' : 'Добавить чат'}
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="chatId">ID чата</Label>
-            <Input
-              id="chatId"
-              placeholder="-1001234567890"
-              value={chatId}
-              onChange={(e) => setChatId(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="type">Тип чата</Label>
-            <Select value={type} onValueChange={(value: Chat['type']) => setType(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Выберите тип" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Нет</SelectItem>
-                <SelectItem value="all">Все</SelectItem>
-                <SelectItem value="success">Успешные</SelectItem>
-                <SelectItem value="errors">Ошибки</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="category">Принадлежность</Label>
-            <Select value={category} onValueChange={(value: Chat['category']) => setCategory(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Выберите принадлежность" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="workers">Воркеры</SelectItem>
-                <SelectItem value="admin">Админка</SelectItem>
-                <SelectItem value="logs">Логи</SelectItem>
-                <SelectItem value="statistics">Статистика</SelectItem>
-                <SelectItem value="applications">Заявки</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="name">Название (опционально)</Label>
-            <Input
-              id="name"
-              placeholder={`${getCategoryLabel(category)} - ${getTypeLabel(type)}`}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          <div className="flex gap-2 justify-end">
-            <Button variant="outline" onClick={onClose}>
-              Отмена
+    <div className="space-y-6">
+      <div className="flex gap-2 flex-wrap">
+        <Button onClick={handleBuyRu} className="bg-green-600 hover:bg-green-700">
+          <ShoppingCart className="h-4 w-4 mr-2" />
+          Купить .ru
+        </Button>
+        <Button variant="outline" onClick={handleDeleteInactive}>
+          <Trash2 className="h-4 w-4 mr-2" />
+          Удалить нерабочие
+        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive">
+              <Trash2 className="h-4 w-4 mr-2" />
+              Удалить все
             </Button>
-            <Button onClick={handleSave} disabled={!chatId.trim()}>
-              {chat ? 'Сохранить' : 'Добавить'}
-            </Button>
-          </div>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Вы точно хотите удалить ВСЕ домены?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Это действие необратимо. Все домены будут удалены из системы.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Отмена</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDeleteAll} className="bg-destructive hover:bg-destructive/90">
+                Удалить все
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+
+      <div className="flex gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Поиск доменов..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+
+      <div className="space-y-4">
+        {paginatedDomains.map((domain) => (
+          <Card key={domain.id} className="hover:shadow-md transition-shadow">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <h3 className="font-semibold">{domain.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Создан: {domain.createdAt}
+                    </p>
+                  </div>
+                  <Badge variant={
+                    domain.status === 'active' ? 'default' : 
+                    domain.status === 'inactive' ? 'secondary' : 'destructive'
+                  }>
+                    {domain.status === 'active' && 'Активен'}
+                    {domain.status === 'inactive' && 'Неактивен'}
+                    {domain.status === 'blocked' && 'Заблокирован'}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="text-right text-sm">
+                    <p>Google CT: {domain.googleCT.length}</p>
+                    <p>Яндекс CT: {domain.yandexCT.length}</p>
+                    <p>Мегафон CT: {domain.megafonCT.length}</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setSelectedDomain(domain)}
+                  >
+                    <Eye className="h-4 w-4 mr-1" />
+                    Просмотр
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious 
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              />
+            </PaginationItem>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(page)}
+                  isActive={currentPage === page}
+                  className="cursor-pointer"
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext 
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+
+      <DomainModal
+        domain={selectedDomain}
+        isOpen={!!selectedDomain}
+        onClose={() => setSelectedDomain(null)}
+      />
+    </div>
   );
 }
