@@ -72,7 +72,6 @@ export function BalanceModal({ user, isOpen, onClose }: BalanceModalProps) {
               />
             </div>
             <Button onClick={handleUpdateBalance} className="w-full">
-            <Button onClick={handleUpdateBalance} className="w-full gradient-primary hover:opacity-90">
               Обновить баланс
             </Button>
           </TabsContent>
@@ -99,7 +98,6 @@ export function BalanceModal({ user, isOpen, onClose }: BalanceModalProps) {
               />
             </div>
             <Button onClick={handleUpdateHold} className="w-full">
-            <Button onClick={handleUpdateHold} className="w-full gradient-primary hover:opacity-90">
               Обновить холд
             </Button>
           </TabsContent>
