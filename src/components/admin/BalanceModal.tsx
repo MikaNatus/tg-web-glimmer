@@ -108,5 +108,3 @@ export function BalanceModal({ user, isOpen, onClose }: BalanceModalProps) {
     </Dialog>
   );
 }
-  )
-}
