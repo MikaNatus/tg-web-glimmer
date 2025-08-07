@@ -48,3 +48,5 @@ export function NewsletterModal({ isOpen, onClose }: NewsletterModalProps) {
     </Dialog>
   );
 }
+  )
+}
