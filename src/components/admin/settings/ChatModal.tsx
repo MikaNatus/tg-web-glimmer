@@ -145,3 +145,5 @@ export function ChatModal({ chat, isOpen, onClose, onSave }: ChatModalProps) {
     </Dialog>
   );
 }
+  )
+}
