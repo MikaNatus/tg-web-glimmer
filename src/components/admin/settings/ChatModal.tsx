@@ -136,7 +136,6 @@ export function ChatModal({ chat, isOpen, onClose, onSave }: ChatModalProps) {
               Отмена
             </Button>
             <Button onClick={handleSave} disabled={!chatId.trim()}>
-            <Button onClick={handleSave} disabled={!chatId.trim()} className="gradient-primary hover:opacity-90">
               {chat ? 'Сохранить' : 'Добавить'}
             </Button>
           </div>
@@ -144,6 +143,4 @@ export function ChatModal({ chat, isOpen, onClose, onSave }: ChatModalProps) {
       </DialogContent>
     </Dialog>
   );
-}
-  )
 }
