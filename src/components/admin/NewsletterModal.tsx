@@ -39,7 +39,6 @@ export function NewsletterModal({ isOpen, onClose }: NewsletterModalProps) {
               Отмена
             </Button>
             <Button onClick={handleSend} disabled={!message.trim()}>
-            <Button onClick={handleSend} disabled={!message.trim()} className="gradient-primary hover:opacity-90">
               Отправить
             </Button>
           </div>
