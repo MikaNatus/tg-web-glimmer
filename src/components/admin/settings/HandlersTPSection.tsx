@@ -184,6 +184,7 @@ export function HandlersTPSection() {
                   Отмена
                 </Button>
                 <Button onClick={handleSubmit} className="flex-1 gradient-primary">
+                <Button onClick={handleSubmit} className="flex-1 gradient-primary hover:opacity-90">
                   {editingHandler ? 'Сохранить' : 'Добавить'}
                 </Button>
               </div>

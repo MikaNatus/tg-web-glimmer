@@ -121,7 +121,7 @@ export function UserDetailsModal({ user, isOpen, onClose }: UserDetailsModalProp
               <Button
                 variant="outline"
                 onClick={() => setIsBalanceModalOpen(true)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 gradient-primary hover:opacity-90 text-white border-0"
               >
                 <DollarSign className="h-4 w-4" />
                 Изменить баланс
@@ -130,7 +130,7 @@ export function UserDetailsModal({ user, isOpen, onClose }: UserDetailsModalProp
               <Button
                 variant={user.status === 'active' ? 'destructive' : 'default'}
                 onClick={handleToggleBlock}
-                className="flex items-center gap-2"
+                className={`flex items-center gap-2 ${user.status === 'active' ? '' : 'gradient-primary hover:opacity-90 text-white border-0'}`}
               >
                 <Ban className="h-4 w-4" />
                 {user.status === 'active' ? 'Заблокировать' : 'Разблокировать'}
@@ -139,7 +139,7 @@ export function UserDetailsModal({ user, isOpen, onClose }: UserDetailsModalProp
               <Button
                 variant="outline"
                 onClick={handleBuyDomain}
-                className="flex items-center gap-2 col-span-2"
+                className="flex items-center gap-2 col-span-2 gradient-primary hover:opacity-90 text-white border-0"
               >
                 <ShoppingCart className="h-4 w-4" />
                 Купить домен .ru

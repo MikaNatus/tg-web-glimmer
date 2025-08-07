@@ -27,6 +27,7 @@ export function InvitesSection() {
               />
             </div>
             <Button>Сохранить</Button>
+            <Button className="gradient-primary hover:opacity-90">Сохранить</Button>
           </CardContent>
         </Card>
 
@@ -44,6 +45,7 @@ export function InvitesSection() {
               />
             </div>
             <Button>Сохранить</Button>
+            <Button className="gradient-primary hover:opacity-90">Сохранить</Button>
           </CardContent>
         </Card>
       </div>

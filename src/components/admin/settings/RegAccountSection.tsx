@@ -86,6 +86,7 @@ export function RegAccountSection() {
             }}>
               <DialogTrigger asChild>
                 <Button onClick={handleEdit} className="gradient-primary">
+                <Button onClick={handleEdit} className="gradient-primary hover:opacity-90">
                   <Edit2 className="w-4 h-4 mr-2" />
                   Изменить
                 </Button>
@@ -123,6 +124,7 @@ export function RegAccountSection() {
                       Отмена
                     </Button>
                     <Button onClick={handleSave} className="flex-1 gradient-primary">
+                    <Button onClick={handleSave} className="flex-1 gradient-primary hover:opacity-90">
                       Сохранить
                     </Button>
                   </div>

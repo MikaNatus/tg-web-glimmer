@@ -75,6 +75,7 @@ export function ChatsSection() {
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Управление чатами</h3>
         <Button onClick={handleAddChat}>
+        <Button onClick={handleAddChat} className="gradient-primary hover:opacity-90">
           <Plus className="h-4 w-4 mr-2" />
           Добавить чат
         </Button>
@@ -91,6 +92,7 @@ export function ChatsSection() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleEditChat(chat)}
+                    className="gradient-primary hover:opacity-90 text-white border-0"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>

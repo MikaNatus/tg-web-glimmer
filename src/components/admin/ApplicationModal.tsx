@@ -80,7 +80,7 @@ export function ApplicationModal({ application, isOpen, onClose }: ApplicationMo
             <div className="flex gap-2 pt-4">
               <Button
                 onClick={handleApprove}
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 gradient-primary hover:opacity-90"
               >
                 <Check className="h-4 w-4 mr-2" />
                 Принять

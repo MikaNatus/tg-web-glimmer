@@ -85,7 +85,7 @@ function SettingsHome() {
       {settingsSections.map((section) => (
         <Card
           key={section.path}
-          className="cursor-pointer transition-all duration-300 hover:shadow-elevated hover:scale-105 shadow-card gradient-secondary border-0 group animate-fade-in"
+          className="cursor-pointer transition-all duration-300 hover:shadow-glow hover:scale-105 shadow-card bg-gradient-card border-0 group animate-fade-in"
           onClick={() => navigate(section.path)}
         >
           <CardContent className="p-4">

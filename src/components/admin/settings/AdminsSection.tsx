@@ -110,6 +110,7 @@ export function AdminsSection() {
                   Отмена
                 </Button>
                 <Button onClick={handleAddAdmin} className="flex-1 gradient-primary">
+                <Button onClick={handleAddAdmin} className="flex-1 gradient-primary hover:opacity-90">
                   Добавить
                 </Button>
               </div>

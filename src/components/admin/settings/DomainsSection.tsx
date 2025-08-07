@@ -86,10 +86,11 @@ export function DomainsSection() {
     <div className="space-y-6">
       <div className="flex gap-2 flex-wrap">
         <Button onClick={handleBuyRu} className="bg-green-600 hover:bg-green-700">
+        <Button onClick={handleBuyRu} className="gradient-primary hover:opacity-90">
           <ShoppingCart className="h-4 w-4 mr-2" />
           Купить .ru
         </Button>
-        <Button variant="outline" onClick={handleDeleteInactive}>
+        <Button variant="outline" onClick={handleDeleteInactive} className="gradient-primary hover:opacity-90 text-white border-0">
           <Trash2 className="h-4 w-4 mr-2" />
           Удалить нерабочие
         </Button>
@@ -160,6 +161,7 @@ export function DomainsSection() {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedDomain(domain)}
+                    className="gradient-primary hover:opacity-90 text-white border-0"
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     Просмотр

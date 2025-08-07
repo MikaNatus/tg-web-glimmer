@@ -121,6 +121,7 @@ export function UsersPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedUser(user)}
+                    className="gradient-primary hover:opacity-90 text-white border-0"
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     Просмотр

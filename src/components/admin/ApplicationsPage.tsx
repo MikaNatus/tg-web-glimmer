@@ -96,6 +96,7 @@ export function ApplicationsPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedApplication(application)}
+                    className="gradient-primary hover:opacity-90 text-white border-0"
                   >
                     <Eye className="h-4 w-4 mr-1" />
                     Просмотр

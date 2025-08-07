@@ -148,6 +148,7 @@ export function CFAccountsSection() {
                   Отмена
                 </Button>
                 <Button onClick={handleSubmit} className="flex-1 gradient-primary">
+                <Button onClick={handleSubmit} className="flex-1 gradient-primary hover:opacity-90">
                   {editingAccount ? 'Сохранить' : 'Добавить'}
                 </Button>
               </div>
@@ -189,7 +190,7 @@ export function CFAccountsSection() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleEdit(account)}
-                    className="hover:bg-secondary/80"
+                    className="gradient-primary hover:opacity-90 text-white border-0"
                   >
                     <Edit2 className="w-4 h-4" />
                   </Button>

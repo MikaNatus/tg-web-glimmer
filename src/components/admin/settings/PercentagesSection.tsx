@@ -65,6 +65,7 @@ export function PercentagesSection() {
             </div>
           </div>
           <Button className="mt-4">Сохранить изменения</Button>
+          <Button className="mt-4 gradient-primary hover:opacity-90">Сохранить изменения</Button>
         </CardContent>
       </Card>
     </div>

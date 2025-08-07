@@ -66,7 +66,7 @@ function AdminHome() {
           {adminButtons.map((button) => (
             <Card
               key={button.title}
-              className="cursor-pointer transition-all duration-300 hover:shadow-elevated hover:scale-105 shadow-card gradient-secondary border-0 group animate-fade-in"
+              className="cursor-pointer transition-all duration-300 hover:shadow-glow hover:scale-105 shadow-card bg-gradient-card border-0 group animate-fade-in"
               onClick={button.onClick}
             >
               <CardContent className="p-4">
