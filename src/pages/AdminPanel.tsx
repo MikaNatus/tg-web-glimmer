@@ -43,23 +43,24 @@ function AdminHome() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto p-4">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => window.history.back()}
-            className="hover:bg-accent shadow-glow"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-md mx-auto p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg gradient-primary shadow-glow">
-              <Settings className="h-6 w-6 text-background" />
-            </div>
-            <h1 className="text-2xl font-bold gradient-text">Админ панель</h1>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => window.history.back()}
+              className="hover:bg-secondary/80"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-xl font-bold">Админ панель</h1>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-md mx-auto p-4">
 
         <div className="grid grid-cols-2 gap-4">
           {adminButtons.map((button) => (
