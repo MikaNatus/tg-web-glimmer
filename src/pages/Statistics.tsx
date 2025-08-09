@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -54,9 +55,25 @@ const Statistics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto p-4 space-y-4">
-        <div className="flex items-center gap-4 mb-6">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.div 
+        className="max-w-md mx-auto p-4 space-y-4"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <motion.div 
+          className="flex items-center gap-4 mb-6"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
           <Button
             variant="ghost"
             size="icon"
@@ -66,55 +83,75 @@ const Statistics = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <h1 className="text-xl font-semibold">Статистика</h1>
-        </div>
+        </motion.div>
 
-        <Tabs defaultValue="day" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="day">День</TabsTrigger>
-            <TabsTrigger value="month">Месяц</TabsTrigger>
-            <TabsTrigger value="allTime">Все время</TabsTrigger>
-          </TabsList>
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <Tabs defaultValue="day" className="space-y-4">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="day">День</TabsTrigger>
+              <TabsTrigger value="month">Месяц</TabsTrigger>
+              <TabsTrigger value="allTime">Все время</TabsTrigger>
+            </TabsList>
 
-          {Object.entries(statsData).map(([period, data]) => (
-            <TabsContent key={period} value={period} className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                <Card className="bg-gradient-card shadow-card border-0 p-3">
-                  <div className="text-center">
-                    <p className="text-xs text-muted-foreground">Заработок</p>
-                    <p className="text-lg font-bold text-primary">{data.earnings}</p>
-                  </div>
-                </Card>
-                <Card className="bg-gradient-card shadow-card border-0 p-3">
-                  <div className="text-center">
-                    <p className="text-xs text-muted-foreground">Пользователи</p>
-                    <p className="text-lg font-bold text-primary">{data.users}</p>
-                  </div>
-                </Card>
-                <Card className="bg-gradient-card shadow-card border-0 p-3">
-                  <div className="text-center">
-                    <p className="text-xs text-muted-foreground">Ссылки</p>
-                    <p className="text-lg font-bold text-primary">{data.links}</p>
-                  </div>
-                </Card>
-              </div>
-            </TabsContent>
-          ))}
+            {Object.entries(statsData).map(([period, data]) => (
+              <TabsContent key={period} value={period} className="space-y-4">
+                <motion.div 
+                  className="grid grid-cols-3 gap-3"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                >
+                  <Card className="bg-gradient-card shadow-card border-0 p-3">
+                    <div className="text-center">
+                      <p className="text-xs text-muted-foreground">Заработок</p>
+                      <p className="text-lg font-bold text-primary">{data.earnings}</p>
+                    </div>
+                  </Card>
+                  <Card className="bg-gradient-card shadow-card border-0 p-3">
+                    <div className="text-center">
+                      <p className="text-xs text-muted-foreground">Пользователи</p>
+                      <p className="text-lg font-bold text-primary">{data.users}</p>
+                    </div>
+                  </Card>
+                  <Card className="bg-gradient-card shadow-card border-0 p-3">
+                    <div className="text-center">
+                      <p className="text-xs text-muted-foreground">Ссылки</p>
+                      <p className="text-lg font-bold text-primary">{data.links}</p>
+                    </div>
+                  </Card>
+                </motion.div>
+              </TabsContent>
+            ))}
         </Tabs>
+        </motion.div>
 
-        <Card className="bg-gradient-card shadow-card border-0">
-          <CardHeader>
-            <CardTitle>Топ пользователей</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {topUsers.map((user) => (
-              <div
-                key={user.id}
-                className={`flex items-center gap-3 p-3 rounded-lg ${
-                  user.position <= 3 
-                    ? `${getPositionColor(user.position)} bg-opacity-20` 
-                    : 'bg-card/50'
-                } hover:bg-primary/10 transition-all duration-300`}
-              >
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        >
+          <Card className="bg-gradient-card shadow-card border-0">
+            <CardHeader>
+              <CardTitle>Топ пользователей</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {topUsers.map((user, index) => (
+                <motion.div
+                  key={user.id}
+                  className={`flex items-center gap-3 p-3 rounded-lg ${
+                    user.position <= 3 
+                      ? `${getPositionColor(user.position)} bg-opacity-20` 
+                      : 'bg-card/50'
+                  } hover:bg-primary/10 transition-all duration-300`}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
+                  whileHover={{ scale: 1.02 }}
+                >
                 <div className="relative">
                   <Avatar className="w-12 h-12">
                     <AvatarImage src={user.avatar} alt={user.username} />
@@ -150,12 +187,13 @@ const Statistics = () => {
                     {user.amount}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </CardContent>
         </Card>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

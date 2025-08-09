@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -68,9 +69,25 @@ const ViewLink = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto p-4 space-y-4">
-        <div className="flex items-center gap-4 mb-6">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.div 
+        className="max-w-md mx-auto p-4 space-y-4"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <motion.div 
+          className="flex items-center gap-4 mb-6"
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
           <Button
             variant="ghost"
             size="icon"
@@ -80,10 +97,15 @@ const ViewLink = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <h1 className="text-xl font-semibold">Просмотр ссылки</h1>
-        </div>
+        </motion.div>
 
         {/* Основная информация */}
-        <Card className="bg-gradient-card shadow-card border-0">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <Card className="bg-gradient-card shadow-card border-0">
           <CardHeader>
             <CardTitle>Информация о ссылке</CardTitle>
           </CardHeader>
@@ -138,9 +160,15 @@ const ViewLink = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Кнопки действий */}
-        <Card className="bg-gradient-card shadow-card border-0">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <Card className="bg-gradient-card shadow-card border-0">
           <CardContent className="p-4 space-y-3">
             <Dialog>
               <DialogTrigger asChild>
@@ -323,9 +351,15 @@ const ViewLink = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Переключатели */}
-        <Card className="bg-gradient-card shadow-card border-0">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <Card className="bg-gradient-card shadow-card border-0">
           <CardContent className="p-4 space-y-4">
             <div className="flex items-center justify-between">
               <Label>Чекер баланса</Label>
@@ -341,9 +375,15 @@ const ViewLink = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Заметка вбиверу */}
-        <Card className="bg-gradient-card shadow-card border-0">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+        >
+          <Card className="bg-gradient-card shadow-card border-0">
           <CardContent className="p-4">
             <Dialog>
               <DialogTrigger asChild>
@@ -381,9 +421,15 @@ const ViewLink = () => {
             </Dialog>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Кнопки управления */}
-        <div className="flex gap-3">
+        <motion.div 
+          className="flex gap-3"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
+        >
           <Button 
             variant="outline" 
             className="flex-1"
@@ -397,9 +443,9 @@ const ViewLink = () => {
             <Trash2 className="h-4 w-4 mr-2" />
             Удалить
           </Button>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

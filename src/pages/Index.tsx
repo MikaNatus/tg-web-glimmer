@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ProfileBlock } from "@/components/ProfileBlock";
 import { ActionButtons } from "@/components/ActionButtons";
 import { Settings } from "./Settings";
@@ -30,20 +31,48 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto space-y-4 p-4">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.div 
+        className="max-w-md mx-auto space-y-4 p-4"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
         {/* Profile Block */}
-        <ProfileBlock onSettingsClick={() => handleNavigate("settings")} />
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <ProfileBlock onSettingsClick={() => handleNavigate("settings")} />
+        </motion.div>
         
         {/* Action Buttons */}
-        <ActionButtons
-          onCreateLink={() => setCurrentPage("create-link")}
-          onMyLinks={() => handleNavigate("links")}
-          isAdmin={isAdmin}
-        />
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <ActionButtons
+            onCreateLink={() => setCurrentPage("create-link")}
+            onMyLinks={() => handleNavigate("links")}
+            isAdmin={isAdmin}
+          />
+        </motion.div>
 
         {/* Latest Profits */}
-        <div className="bg-gradient-card shadow-card border-0 rounded-xl p-4">
+        <motion.div 
+          className="bg-gradient-card shadow-card border-0 rounded-xl p-4"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
           <h3 className="text-lg font-semibold mb-4 text-foreground">Последние профиты</h3>
           <div className="space-y-3">
             {[
@@ -103,11 +132,15 @@ const Index = () => {
                 bgColor: "bg-green-400/10"
               },
             ].map((item, index) => (
-              <div 
+              <motion.div 
                 key={index} 
                 className={`p-3 bg-secondary/30 rounded-lg transition-opacity duration-300 ${
                   index >= 3 ? 'opacity-60' : index >= 4 ? 'opacity-30' : 'opacity-100'
                 }`}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
               >
                 <div className="flex items-start gap-3">
                   <div className={`w-10 h-10 ${item.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
@@ -130,12 +163,12 @@ const Index = () => {
                     <div className="text-xs text-muted-foreground">{item.method}</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

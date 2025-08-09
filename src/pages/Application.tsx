@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,16 +28,37 @@ export const Application = ({ onBack }: ApplicationProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-md mx-auto">
-        <div className="flex items-center gap-4 mb-6">
+    <motion.div 
+      className="min-h-screen bg-background p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.div 
+        className="max-w-md mx-auto"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <motion.div 
+          className="flex items-center gap-4 mb-6"
+          initial={{ x: -30, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
           <Button variant="ghost" size="icon" onClick={onBack}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <h1 className="text-xl font-semibold">Заявка на вступление</h1>
-        </div>
+        </motion.div>
 
-        <Card>
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          <Card>
           <CardHeader>
             <CardTitle>Заполните анкету</CardTitle>
           </CardHeader>
@@ -116,7 +138,8 @@ export const Application = ({ onBack }: ApplicationProps) => {
             </Button>
           </CardContent>
         </Card>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };

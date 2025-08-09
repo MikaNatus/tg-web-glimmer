@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowLeft, Package, Upload, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -112,11 +113,22 @@ const EditLink = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-md mx-auto p-4">
-          <div className="flex items-center gap-3">
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <Button
               variant="ghost"
               size="sm"
@@ -126,13 +138,23 @@ const EditLink = () => {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <h1 className="text-xl font-bold">Редактирование ссылки</h1>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto p-4 space-y-6">
+      <motion.div 
+        className="max-w-md mx-auto p-4 space-y-6"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
         {/* Current Domain Info */}
-        <Card className="p-4 bg-secondary/50 border-border">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <Card className="p-4 bg-secondary/50 border-border">
           <div className="flex items-center gap-2">
             <Package className="w-5 h-5 text-primary" />
             <div>
@@ -141,6 +163,7 @@ const EditLink = () => {
             </div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Domain Selection */}
         <Card className="p-4 border-border">
@@ -305,15 +328,21 @@ const EditLink = () => {
         </Card>
 
         {/* Save Button */}
-        <Button
-          onClick={handleSave}
-          className="w-full gradient-primary hover:opacity-90"
-          size="lg"
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
         >
-          Сохранить изменения
-        </Button>
-      </div>
-    </div>
+          <Button
+            onClick={handleSave}
+            className="w-full gradient-primary hover:opacity-90"
+            size="lg"
+          >
+            Сохранить изменения
+          </Button>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

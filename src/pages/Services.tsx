@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -55,11 +56,22 @@ export const Services = ({ categoryId, categoryName, onBack, onServiceSelect }: 
   const services = servicesData[categoryId] || [];
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-md mx-auto p-4">
-          <div className="flex items-center gap-3">
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <Button
               variant="ghost"
               size="sm"
@@ -69,19 +81,31 @@ export const Services = ({ categoryId, categoryName, onBack, onServiceSelect }: 
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <h1 className="text-xl font-bold">{categoryName}</h1>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto p-4">
+      <motion.div 
+        className="max-w-md mx-auto p-4"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
         {/* Services Grid */}
         <div className="grid gap-3">
-          {services.map((service) => (
-            <Card
+          {services.map((service, index) => (
+            <motion.div
               key={service.id}
-              className="p-4 cursor-pointer hover:shadow-glow transition-all duration-200 shadow-card"
-              onClick={() => onServiceSelect(service.id, service.name)}
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
+              <Card
+                className="p-4 cursor-pointer hover:shadow-glow transition-all duration-200 shadow-card"
+                onClick={() => onServiceSelect(service.id, service.name)}
+              >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-secondary/50 flex items-center justify-center text-2xl">
                   {service.logo}
@@ -94,9 +118,10 @@ export const Services = ({ categoryId, categoryName, onBack, onServiceSelect }: 
                 </div>
               </div>
             </Card>
+            </motion.div>
           ))}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

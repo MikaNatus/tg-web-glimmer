@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowLeft, User, Bell, Shield, Palette, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -30,11 +31,22 @@ export const Settings = ({ onBack }: SettingsProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-md mx-auto p-4">
-          <div className="flex items-center gap-3">
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <Button
               variant="ghost"
               size="sm"
@@ -44,13 +56,23 @@ export const Settings = ({ onBack }: SettingsProps) => {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <h1 className="text-xl font-bold">Настройки</h1>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto p-4 space-y-6">
+      <motion.div 
+        className="max-w-md mx-auto p-4 space-y-6"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
         {/* Profile Section */}
-        <Card className="p-6 shadow-card">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <Card className="p-6 shadow-card">
           <div className="flex items-center gap-4 mb-6">
             <User className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Профиль</h2>
@@ -108,9 +130,15 @@ export const Settings = ({ onBack }: SettingsProps) => {
             </div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Notifications Section */}
-        <Card className="p-6 shadow-card">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+        >
+          <Card className="p-6 shadow-card">
           <div className="flex items-center gap-4 mb-6">
             <Bell className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Уведомления</h2>
@@ -128,9 +156,15 @@ export const Settings = ({ onBack }: SettingsProps) => {
             </div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Security Section */}
-        <Card className="p-6 shadow-card">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+        >
+          <Card className="p-6 shadow-card">
           <div className="flex items-center gap-4 mb-6">
             <Shield className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Безопасность</h2>
@@ -154,9 +188,15 @@ export const Settings = ({ onBack }: SettingsProps) => {
             </Button>
           </div>
         </Card>
+        </motion.div>
 
         {/* Appearance Section */}
-        <Card className="p-6 shadow-card">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.6 }}
+        >
+          <Card className="p-6 shadow-card">
           <div className="flex items-center gap-4 mb-6">
             <Palette className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Внешний вид</h2>
@@ -174,9 +214,15 @@ export const Settings = ({ onBack }: SettingsProps) => {
             </div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Language Section */}
-        <Card className="p-6 shadow-card">
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
+        >
+          <Card className="p-6 shadow-card">
           <div className="flex items-center gap-4 mb-6">
             <Globe className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Язык</h2>
@@ -194,15 +240,22 @@ export const Settings = ({ onBack }: SettingsProps) => {
             </div>
           </div>
         </Card>
+        </motion.div>
 
         {/* Save Button */}
-        <Button
-          onClick={handleSave}
-          className="w-full gradient-primary hover:opacity-90 shadow-glow"
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.8 }}
         >
-          Сохранить изменения
-        </Button>
-      </div>
-    </div>
+          <Button
+            onClick={handleSave}
+            className="w-full gradient-primary hover:opacity-90 shadow-glow"
+          >
+            Сохранить изменения
+          </Button>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };

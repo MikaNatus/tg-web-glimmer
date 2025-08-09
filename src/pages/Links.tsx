@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { 
   ArrowLeft, 
   ShoppingBag, 
@@ -208,11 +209,22 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
   // Links view (показать все ссылки)
   if (viewState === "links") {
     return (
-      <div className="min-h-screen bg-background">
+      <motion.div 
+        className="min-h-screen bg-background"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         {/* Header */}
         <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
           <div className="max-w-md mx-auto p-4">
-            <div className="flex items-center gap-3">
+            <motion.div 
+              className="flex items-center gap-3"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
               <Button
                 variant="ghost"
                 size="sm"
@@ -222,17 +234,29 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
                 <ArrowLeft className="w-4 h-4" />
               </Button>
               <h1 className="text-xl font-bold">Мои ссылки</h1>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        <div className="max-w-md mx-auto p-4 space-y-4">
-          {mockLinks.map((link) => (
-            <Card 
-              key={link.id} 
-              className="p-4 shadow-card cursor-pointer hover:shadow-card-hover transition-all duration-200"
-              onClick={() => navigate(`/view-link/${link.id}`)}
+        <motion.div 
+          className="max-w-md mx-auto p-4 space-y-4"
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          {mockLinks.map((link, index) => (
+            <motion.div
+              key={link.id}
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
+              <Card 
+                className="p-4 shadow-card cursor-pointer hover:shadow-card-hover transition-all duration-200"
+                onClick={() => navigate(`/view-link/${link.id}`)}
+              >
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
@@ -264,19 +288,31 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
                 </div>
               </div>
             </Card>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     );
   }
 
   // Categories view (для создания ссылок)
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div 
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-md mx-auto p-4">
-          <div className="flex items-center gap-3">
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
             <Button
               variant="ghost"
               size="sm"
@@ -286,19 +322,31 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <h1 className="text-xl font-bold">Создать ссылку</h1>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto p-4">
+      <motion.div 
+        className="max-w-md mx-auto p-4"
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
         {/* Categories Grid */}
         <div className="grid grid-cols-2 gap-3">
-          {categories.map((category) => (
-            <Card
+          {categories.map((category, index) => (
+            <motion.div
               key={category.id}
-              className="p-4 cursor-pointer hover:shadow-glow transition-all duration-200 shadow-card"
-              onClick={() => handleCategorySelect(category.id)}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
+              <Card
+                className="p-4 cursor-pointer hover:shadow-glow transition-all duration-200 shadow-card"
+                onClick={() => handleCategorySelect(category.id)}
+              >
               <div className="space-y-3">
                 <div className={`w-12 h-12 rounded-lg ${category.bgColor} flex items-center justify-center`}>
                   <category.icon className={`w-6 h-6 ${category.color}`} />
@@ -311,9 +359,10 @@ export const Links = ({ onBack, mode = "view" }: LinksProps) => {
                 </div>
               </div>
             </Card>
+            </motion.div>
           ))}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
